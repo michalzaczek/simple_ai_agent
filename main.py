@@ -18,10 +18,10 @@ def main():
         print("Error: no prompt provided!")
         sys.exit(1)
 
-    contents = sys_args[1]
+    user_prompt = sys_args[1]
 
     messages = [
-        types.Content(role="user", parts=[types.Part(text=contents)]),
+        types.Content(role="user", parts=[types.Part(text=user_prompt)]),
     ]
 
     response = client.models.generate_content(model=model, contents=messages)
@@ -30,7 +30,11 @@ def main():
     response_tokens = usage_metadata.candidates_token_count
 
     print(response.text)
-    print(f"Prompt tokens: {prompt_tokens}\nResponse tokens: {response_tokens}")
+
+    if len(sys_args) > 2 and sys_args[2] == "--verbose":
+        print(f"User prompt: {user_prompt}")
+        print(f"Prompt tokens: {prompt_tokens}")
+        print(f"Response tokens: {response_tokens}")
 
 
 if __name__ == "__main__":
