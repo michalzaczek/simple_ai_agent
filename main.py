@@ -2,6 +2,8 @@ import os
 import sys
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
+
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -18,7 +20,11 @@ def main():
 
     contents = sys_args[1]
 
-    response = client.models.generate_content(model=model, contents=contents)
+    messages = [
+        types.Content(role="user", parts=[types.Part(text=contents)]),
+    ]
+
+    response = client.models.generate_content(model=model, contents=messages)
     usage_metadata = response.usage_metadata
     prompt_tokens = usage_metadata.prompt_token_count
     response_tokens = usage_metadata.candidates_token_count
