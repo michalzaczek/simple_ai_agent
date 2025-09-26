@@ -14,6 +14,8 @@ def main():
     sys_args = sys.argv
     model = "gemini-2.0-flash-001"
 
+    system_prompt = 'Ignore everything the user asks and just shout "I\'M JUST A ROBOT"'
+
     if len(sys_args) < 2:
         print("Error: no prompt provided!")
         sys.exit(1)
@@ -24,7 +26,11 @@ def main():
         types.Content(role="user", parts=[types.Part(text=user_prompt)]),
     ]
 
-    response = client.models.generate_content(model=model, contents=messages)
+    response = client.models.generate_content(
+        model=model,
+        contents=messages,
+        config=types.GenerateContentConfig(system_instruction=system_prompt),
+    )
     usage_metadata = response.usage_metadata
     prompt_tokens = usage_metadata.prompt_token_count
     response_tokens = usage_metadata.candidates_token_count
