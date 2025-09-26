@@ -1,5 +1,7 @@
 import os
 
+from config import MAX_CHARS
+
 
 def get_abs_full_path(working_directory, directory):
     full_path = os.path.join(working_directory, directory)
@@ -25,3 +27,9 @@ def list_dir_to_str(path):
         return dir_str
     except Exception as e:
         return f"Error: {str(e)}"
+
+
+def read_file(file_path, MAX_CHARS=MAX_CHARS):
+    with open(file_path, "r") as f:
+        file_content_string = f.read(MAX_CHARS)
+        return file_content_string

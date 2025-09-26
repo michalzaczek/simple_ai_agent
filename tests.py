@@ -1,18 +1,26 @@
-from functions.get_files_info import get_files_info
+from functions.get_file_content import get_file_content
 
 
-print('get_files_info("calculator", "."):')
-print("Result for current directory:")
-print(get_files_info("calculator", "."))
+# -- file content tests
 
-print('\nget_files_info("calculator", "pkg"):')
-print("Result for 'pkg' directory:")
-print(get_files_info("calculator", "pkg"))
+print('get_file_content("calculator", "lorem.txt"):')
+print("Result for lorem.txt (should truncate):")
+result = get_file_content("calculator", "lorem.txt")
+print(f"Length: {len(result)}")
+print(result)
 
-print('\nget_files_info("calculator", "/bin"):')
-print("Result for '/bin' directory:")
-print(get_files_info("calculator", "/bin"))
+print('\nget_file_content("calculator", "main.py"):')
+print("Result for main.py:")
+print(get_file_content("calculator", "main.py"))
 
-print('\nget_files_info("calculator", "../"):')
-print("Result for '../' directory:")
-print(get_files_info("calculator", "../"))
+print('\nget_file_content("calculator", "pkg/calculator.py"):')
+print("Result for pkg/calculator.py:")
+print(get_file_content("calculator", "pkg/calculator.py"))
+
+print('\nget_file_content("calculator", "/bin/cat"):')
+print("Result for /bin/cat (should return an error string):")
+print(get_file_content("calculator", "/bin/cat"))
+
+print('\nget_file_content("calculator", "pkg/does_not_exist.py"):')
+print("Result for pkg/does_not_exist.py:")
+print(get_file_content("calculator", "pkg/does_not_exist.py"))
