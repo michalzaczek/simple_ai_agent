@@ -1,5 +1,27 @@
 import os
+from google.genai import types
+
 from functions.file_utils import get_abs_full_path, is_path_inside_wd
+
+
+schema_write_file = types.FunctionDeclaration(
+    name="write_file",
+    description="Writes the provided content to the specified file path within the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The file path to write to, relative to the working directory.",
+            ),
+            "content": types.Schema(
+                type=types.Type.STRING,
+                description="The content to write into the file.",
+            ),
+        },
+        required=["file_path", "content"],
+    ),
+)
 
 
 def write_file(working_directory, file_path, content):
